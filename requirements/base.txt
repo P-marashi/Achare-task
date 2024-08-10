@@ -1,0 +1,10 @@
+# Django
+django-environ>=0.9.0,<=0.10.0
+Pillow>=9.3.0
+django-redis
+djangorestframework
+django-filter
+markdown
+djangorestframework-simplejwt
+drf-spectacular
+django-cors-headers

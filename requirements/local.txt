@@ -1,0 +1,20 @@
+-r base.txt
+
+psycopg2_binary
+ipdb
+
+# Code quality
+flake8
+flake8-isort
+coverage
+black
+pylint-django
+pytest-django
+pre-commit
+
+
+# Django
+factory-boy 
+django-extensions
+django-coverage-plugin
+pytest-django
