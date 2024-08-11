@@ -5,6 +5,7 @@ django-redis
 djangorestframework
 django-filter
 markdown
+mysqlclient
 djangorestframework-simplejwt
 drf-spectacular
 django-cors-headers

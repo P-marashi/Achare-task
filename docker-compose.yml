@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: achare-database
+    image: mariadb:10.9.3
+    environment:
+      - MARIADB_ROOT_PASSWORD=pouya
+      - MARIADB_DATABASE=achare
+      - MARIADB_USER=admin
+      - MYSQL_PASSWORD=pouya
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: on-failure
+
+  redis:
+    container_name: achare-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: on-failure
+
+volumes:
+  mariadb_data:

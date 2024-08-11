@@ -8,5 +8,5 @@ import re
 
 
 def phone_number_regex(phone_number):
-    """ Checking phone number validation by regex """
-    return re.match("^09[1-2-3]+{11}", phone_number)
+    # Pattern: starts with 09 followed by 9 digits
+    return re.match(r"^09\d{9}$", phone_number)
