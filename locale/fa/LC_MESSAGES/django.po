@@ -1,0 +1,71 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-13 16:25+0330\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: achare/authentication/admin.py:20
+msgid "Personal info"
+msgstr "اطلاعات شخصی"
+
+#: achare/authentication/admin.py:22
+msgid "Permissions"
+msgstr "مجوزها"
+
+#: achare/authentication/admin.py:25
+msgid "Important dates"
+msgstr "تاریخ‌های مهم"
+
+#: achare/authentication/models.py:37
+msgid "otp"
+msgstr "کد یکبار مصرف"
+
+#: achare/authentication/models.py:38
+msgid "password"
+msgstr "رمز عبور"
+
+#: achare/core/messages.py:5
+msgid "otp sent to mobile number."
+msgstr "کد یکبار مصرف به شماره موبایل ارسال شد."
+
+#: achare/core/messages.py:6
+msgid "expired nonce."
+msgstr "توکن منقضی شده است."
+
+#: achare/core/messages.py:7 achare/core/messages.py:8
+msgid "Invalid or expired Code."
+msgstr "کد نامعتبر یا منقضی شده است."
+
+#: achare/core/messages.py:9
+msgid "Profile updated successfully."
+msgstr "پروفایل با موفقیت به‌روز شد."
+
+#: achare/core/messages.py:10
+msgid "Unexpected error while updating profile"
+msgstr "خطای غیرمنتظره در حین به‌روزرسانی پروفایل"
+
+#: achare/core/messages.py:14
+msgid "A server error occurred."
+msgstr "یک خطای سرور رخ داد."
+
+#: achare/core/messages.py:15
+msgid "Internal server error. Please try again."
+msgstr "خطای داخلی سرور. لطفا دوباره تلاش کنید."
+
+#: achare/core/messages.py:16
+msgid "Error during user authentication by mobile"
+msgstr "خطا در احراز هویت کاربر از طریق موبایل"
