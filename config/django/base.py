@@ -49,6 +49,7 @@ INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     # custom middleware for otp and login
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -106,12 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'fa'
+TIME_ZONE = "Asia/Tehran"
 
 USE_I18N = True
-
+USE_L10N = True
+USE_I18N = True
 USE_TZ = True
 
 
@@ -166,4 +168,4 @@ LOGGING = {
 }
 
 # You can remove the files from settings if you dont need them.
-from config.settings.email import *
+from config.settings.jwt_config import * # noqa
