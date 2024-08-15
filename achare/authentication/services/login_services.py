@@ -14,6 +14,7 @@ from achare.core.messages import (
     TOO_MANY_FAILED_ATTEMPTS,
     INVALID_OR_EXPIRED_OTP,
     INVALID_PASSWORD,
+    USER_DOSE_NOT_EXIST,
 )
 from django.contrib.auth import get_user_model
 
@@ -33,7 +34,7 @@ def login_user(nonce: str, password: str, ip_address: str) -> Response:
     if is_user_blocked:
         return Response(
             {
-                "detail": TOO_MANY_FAILED_ATTEMPTS.format(minutes=remaining_time),
+                "detail": TOO_MANY_FAILED_ATTEMPTS.format(time=remaining_time),
             },
             status=status.HTTP_429_TOO_MANY_REQUESTS,
         )
@@ -43,8 +44,7 @@ def login_user(nonce: str, password: str, ip_address: str) -> Response:
     except User.DoesNotExist:
         increment_failed_attempts(ip_address, mobile_number)
         return Response(
-            {"detail": "User with this mobile number does not exist."},
-            status=status.HTTP_400_BAD_REQUEST
+            {"detail": USER_DOSE_NOT_EXIST}, status=status.HTTP_400_BAD_REQUEST
         )
     if user.login_method == User.LoginMethod.OTP:
         if password != str(cache.get(f"otp:{mobile_number}")):

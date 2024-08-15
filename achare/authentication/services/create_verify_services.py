@@ -3,14 +3,15 @@ from django.core.cache import cache
 from rest_framework import status
 from rest_framework.response import Response
 from achare.utils.helper_functions import (
-    is_blocked,
     send_and_cache_otp,
     generate_and_cache_nonce,
-    reset_failed_attempts,
-    increment_failed_attempts,
     clean_up_cache,
 )
-
+from achare.authentication.helper_functions import (
+    is_blocked,
+    increment_failed_attempts,
+    reset_failed_attempts,
+)
 from achare.core.jwt import generate_user_token
 from django.contrib.auth import get_user_model
 from achare.core.messages import (
@@ -60,9 +61,9 @@ def verify_and_authenticate_user(nonce: str, otp: str, ip_address: str) -> Respo
     if is_user_blocked:
         return Response(
             {
-                "detail": TOO_MANY_FAILED_ATTEMPTS.format(minutes=remaining_time),
+                "detail": TOO_MANY_FAILED_ATTEMPTS.format(time=remaining_time),
             },
-            status=status.HTTP_429_TOO_MANY_REQUESTS,
+            status=status.HTTP_403_FORBIDDEN,
         )
 
     stored_otp = cache.get(f"otp:{mobile_number}")

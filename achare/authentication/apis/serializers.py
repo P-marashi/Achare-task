@@ -18,10 +18,11 @@ class VerifyOTPSerializer(serializers.Serializer):
     nonce = serializers.CharField(max_length=36)
     otp = serializers.CharField(max_length=6)
 
-    # def validate_otp(value):
-    #     if len(value) != 6:
-    #         raise ValidationError("otp must be exactly 6 digits.")
-    #     return value
+    def validate_otp(self, value):
+        # Ensure the OTP is exactly 6 characters long
+        if len(value) != 6:
+            raise ValidationError("OTP must be exactly 6 digits.")
+        return value
 
 
 class CompleteProfileSerializer(serializers.Serializer):

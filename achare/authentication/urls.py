@@ -3,7 +3,8 @@ from achare.authentication.apis.authentication_api import (
     VerifyOtp,
     CompleteProfile,
     UserAuthentication,
-    LoginUser)
+    LoginUser,
+)
 
 
 urlpatterns = [
