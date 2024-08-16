@@ -8,10 +8,11 @@ INVALID_OR_EXPIRED_OTP = _("Invalid or expired Code.")
 INVALID_PASSWORD = _("Invalid password")
 PROFILE_UPDATED_SUCCESSFULLY = _("Profile updated successfully.")
 ERROR_IN_UPDATE_PROFILE = _("Unexpected error while updating profile")
-TOO_MANY_FAILED_ATTEMPTS = _("Too many failed attempts. Try again in {minutes} minutes."
-)
+TOO_MANY_FAILED_ATTEMPTS = "Too many failed attempts. Try again in {time}."
+
 
 # custom message for exceptions
 CUSTOM_API_EXCEPTION = _("A server error occurred.")
 INTERNAL_SERVER_ERROR = _("Internal server error. Please try again.")
 ERROR_DURING_AUTHENTICATE = _("Error during user authentication by mobile")
+USER_DOSE_NOT_EXIST = _("User with this mobile number does not exist")

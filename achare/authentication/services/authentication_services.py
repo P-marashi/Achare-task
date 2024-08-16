@@ -1,7 +1,7 @@
 import logging
 from typing import Optional, Tuple
 from django.contrib.auth import get_user_model
-from achare.utils.helper_functions import (
+from achare.authentication.helper_functions import (
     send_and_cache_otp,
     generate_and_cache_nonce,
 )

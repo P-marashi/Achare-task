@@ -2,7 +2,7 @@ import logging
 from django.core.cache import cache
 from rest_framework import status
 from rest_framework.response import Response
-from achare.utils.helper_functions import (
+from achare.authentication.helper_functions import (
     is_blocked,
     reset_failed_attempts,
     increment_failed_attempts,

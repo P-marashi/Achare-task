@@ -1,4 +1,6 @@
 import logging
+import random
+import uuid
 from typing import Any, Tuple, Optional
 
 from django.conf import settings
@@ -88,3 +90,50 @@ def get_remaining_block_time(key: str) -> str:
         return f"{hours:02}:{minutes:02}:{seconds:02}"
     else:
         return "00:00:00"
+
+
+def send_otp(otp: int, mobile_number: str) -> bool:
+    """
+    Send an OTP to the given mobile number.
+    Replace with actual implementation.
+    """
+    # Implementation to send OTP goes here
+    return True
+
+
+def send_and_cache_otp(mobile_number: str) -> str:
+    """
+    Generate, send, and cache an OTP for the given mobile number.
+    Returns the generated OTP.
+    """
+    otp = random.randint(100000, 999999)
+    cache_set(f"otp:{mobile_number}", otp, BLOCK_DURATION)
+    send_otp(otp, mobile_number)
+    logger.debug(f"Generated and sent OTP: {otp}")
+    return otp
+
+
+def generate_and_cache_nonce(mobile_number: str) -> str:
+    """
+    Generate and cache a nonce for the given mobile number.
+    Returns the generated nonce.
+    """
+    nonce = str(uuid.uuid4())
+    cache_set(f"hash:{nonce}", mobile_number, BLOCK_DURATION)
+    logger.debug(f"Generated and cached nonce: {nonce}")
+    return nonce
+
+
+def cache_set(key: str, value: Any, timeout: int = settings.CACHE_TTL) -> None:
+    """
+    Set a value in the cache with an optional timeout.
+    """
+    cache.set(key, value, timeout)
+
+
+def clean_up_cache(mobile_number: str, nonce: str) -> None:
+    """
+    Remove OTP and nonce from the cache after successful verification.
+    """
+    cache.delete(f"otp:{mobile_number}")
+    cache.delete(f"hash:{nonce}")

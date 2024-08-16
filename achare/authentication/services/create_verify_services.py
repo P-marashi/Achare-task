@@ -2,7 +2,7 @@ import logging
 from django.core.cache import cache
 from rest_framework import status
 from rest_framework.response import Response
-from achare.utils.helper_functions import (
+from achare.authentication.helper_functions import (
     send_and_cache_otp,
     generate_and_cache_nonce,
     clean_up_cache,

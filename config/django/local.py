@@ -14,8 +14,6 @@ DATABASES = {
     ),
 }
 
-
-
 # Local-Memory caching
 CACHES = {
     'default': {
