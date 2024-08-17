@@ -7,7 +7,8 @@ DEBUG = env("SETTINGS_DEBUG")
 
 # Allowed hosts (Set your domain here)
 ALLOWED_HOSTS = [DOMAIN_NAME, f"www.{DOMAIN_NAME}"]
-# Database with postgresql
+
+
 DATABASES = {
     "default": env.db(
         "DATABASE_URL", default="mysql://admin:pouya@achare_db:3306/woody"

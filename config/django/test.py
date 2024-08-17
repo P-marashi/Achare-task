@@ -1,28 +1,28 @@
 from .base import *
+from pathlib import Path
 
+# Ensure BASE_DIR is a Path object
+BASE_DIR = Path(BASE_DIR)
 
-# Debug should be True in local mode
-DEBUG = env("SETTINGS_DEBUG")
+# Debug should be True in test mode
+DEBUG = True
 
-
-# Allowed hosts
+# Allowed hosts for tests
 ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
-
-# Database in local with Sqlite
+# Database in test environment with Sqlite
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'test_db.sqlite3',  # Ensure this is a Path object
     },
 }
 
-
-# Local-Memory caching
+# Use Local-Memory caching for tests to avoid using Redis
 CACHES = {
     'default': {
-        'BACKEND': 'django.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake-test',
     }
 }
 

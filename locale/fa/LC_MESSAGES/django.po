@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-13 16:25+0330\n"
+"POT-Creation-Date: 2024-08-17 17:51+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,17 +18,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: achare/authentication/admin.py:20
+#: achare/authentication/admin.py:21
 msgid "Personal info"
 msgstr "اطلاعات شخصی"
 
-#: achare/authentication/admin.py:22
+#: achare/authentication/admin.py:23
 msgid "Permissions"
 msgstr "مجوزها"
 
-#: achare/authentication/admin.py:25
+#: achare/authentication/admin.py:26
 msgid "Important dates"
 msgstr "تاریخ‌های مهم"
+
+#: achare/authentication/apis/serializers.py:14
+msgid "Phone number must start with '09' and be 11 digits long."
+msgstr "شماره تلفن باید با '09' شروع شده و 11 رقم طول داشته باشد."
+
+#: achare/authentication/apis/serializers.py:26
+msgid "OTP must be exactly 6 digits."
+msgstr "کد یکبار مصرف باید دقیقاً 6 رقم باشد."
 
 #: achare/authentication/models.py:37
 msgid "otp"
@@ -38,17 +46,39 @@ msgstr "کد یکبار مصرف"
 msgid "password"
 msgstr "رمز عبور"
 
+#: achare/core/exceptions.py:20
+msgid "invalid_nonce"
+msgstr "توکن نامعتبر"
+
+#: achare/core/exceptions.py:26
+msgid "invalid_otp"
+msgstr "کد یکبار مصرف نامعتبر"
+
+#: achare/core/exceptions.py:33
+msgid "invalid username or password"
+msgstr "نام کاربری یا رمز عبور نامعتبر"
+
+#: achare/core/exceptions.py:34
+msgid "invalid_password_or_username"
+msgstr "نام کاربری یا رمز عبور نامعتبر"
+
 #: achare/core/messages.py:5
 msgid "otp sent to mobile number."
 msgstr "کد یکبار مصرف به شماره موبایل ارسال شد."
 
 #: achare/core/messages.py:6
-msgid "expired nonce."
-msgstr "توکن منقضی شده است."
+#, fuzzy
+#| msgid "Invalid or expired Code."
+msgid "Invalid or expired nonce."
+msgstr "توکن نامعتبر یا منقضی شده است."
 
-#: achare/core/messages.py:7 achare/core/messages.py:8
+#: achare/core/messages.py:7
 msgid "Invalid or expired Code."
 msgstr "کد نامعتبر یا منقضی شده است."
+
+#: achare/core/messages.py:8
+msgid "Invalid password or username"
+msgstr "نام کاربری یا رمز عبور نامعتبر"
 
 #: achare/core/messages.py:9
 msgid "Profile updated successfully."
@@ -58,14 +88,35 @@ msgstr "پروفایل با موفقیت به‌روز شد."
 msgid "Unexpected error while updating profile"
 msgstr "خطای غیرمنتظره در حین به‌روزرسانی پروفایل"
 
+#: achare/core/messages.py:11
+msgid "There was an issue updating the profile."
+msgstr "مشکلی در به‌روزرسانی پروفایل وجود داشت."
+
 #: achare/core/messages.py:14
 msgid "A server error occurred."
 msgstr "یک خطای سرور رخ داد."
 
 #: achare/core/messages.py:15
-msgid "Internal server error. Please try again."
-msgstr "خطای داخلی سرور. لطفا دوباره تلاش کنید."
+#, fuzzy
+#| msgid "Internal server error. Please try again."
+msgid "Internal server error"
+msgstr "خطای داخلی سرور. لطفاً دوباره تلاش کنید."
 
 #: achare/core/messages.py:16
 msgid "Error during user authentication by mobile"
 msgstr "خطا در احراز هویت کاربر از طریق موبایل"
+
+#: achare/core/messages.py:17
+msgid "User with this mobile number does not exist"
+msgstr "کاربری با این شماره موبایل وجود ندارد"
+
+#: achare/core/messages.py:18
+msgid "There was an issue updating the profile"
+msgstr "مشکلی در به‌روزرسانی پروفایل وجود داشت."
+
+#: achare/utils/validators.py:11
+msgid "Invalid phone number format. Please ensure it matches the required pattern."
+msgstr "فرمت شماره تلفن نامعتبر است. لطفاً اطمینان حاصل کنید که با الگوی مورد نظر مطابقت دارد."
+
+#~ msgid "expired nonce."
+#~ msgstr "توکن منقضی شده است."
