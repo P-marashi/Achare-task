@@ -1,87 +1,72 @@
 import logging
-from django.core.cache import cache
-from rest_framework import status
-from rest_framework.response import Response
-from achare.authentication.helper_functions import (
-    send_and_cache_otp,
-    generate_and_cache_nonce,
+
+from achare.authentication.auth_blocking import (
     clean_up_cache,
+    increment_failed_attempts,
+    is_blocked,
+    redis_cache,
 )
 from achare.authentication.helper_functions import (
-    is_blocked,
-    increment_failed_attempts,
-    reset_failed_attempts,
+    generate_and_cache_nonce,
+    generate_send_and_cache_otp,
+)
+from achare.core.exceptions import (
+    InvalidNonceException,
+    InvalidOTPException,
+    UserBlockedException,
 )
 from achare.core.jwt import generate_user_token
+from achare.core.messages import OTP_SENT
 from django.contrib.auth import get_user_model
-from achare.core.messages import (
-    OTP_SENT,
-    INVALID_OR_EXPIRED_OTP,
-    INVALID_OR_EXPIRED_NONCE,
-    TOO_MANY_FAILED_ATTEMPTS,
-)
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
-def create_user(mobile_number: str) -> User:
-    """Create a new user and mark them as active."""
-    user = User.objects.create(mobile_number=mobile_number, is_active=True)
-    user.save()
+def create_user(mobile_number):
+    user = User.objects.filter(mobile_number=mobile_number).first()
+    if not user:
+        user = User.objects.create(mobile_number=mobile_number, is_active=True)
     return user
 
 
-def handle_new_user_authentication(mobile_number: str) -> Response:
+def handle_new_user_authentication(mobile_number: str) -> dict:
     """
-    Handle authentication for a new user by generating an OTP and a unique nonce.
-    Returns a Response with the nonce and a message indicating OTP was sent.
+    Handle authentication for a new user by generating an OTP and a nonce.
     """
-    send_and_cache_otp(mobile_number)
+    generate_send_and_cache_otp(mobile_number)
     nonce = generate_and_cache_nonce(mobile_number)
-    return Response(
-        {
-            "is_new_user": True,
-            "nonce": nonce,
-            "message": OTP_SENT,
-        },
-        status=status.HTTP_200_OK,
-    )
+
+    return {
+        "its_new_user": True,
+        "nonce": nonce,
+        "message": OTP_SENT,
+    }
 
 
-def verify_and_authenticate_user(nonce: str, otp: str, ip_address: str) -> Response:
-    """Verify the provided OTP and authenticate the user."""
-    mobile_number = cache.get(f"hash:{nonce}")
+def verify_and_authenticate_user(nonce: str, otp: str, ip_address: str) -> dict:
+    """
+    Verify the provided OTP and authenticate the user if valid.
+    """
+    mobile_number = redis_cache.get(f"hash:{nonce}")
     if not mobile_number:
-        return Response(
-            {"detail": INVALID_OR_EXPIRED_NONCE}, status=status.HTTP_400_BAD_REQUEST
-        )
+        raise InvalidNonceException()
 
     is_user_blocked, remaining_time = is_blocked(ip_address, mobile_number)
     if is_user_blocked:
-        return Response(
-            {
-                "detail": TOO_MANY_FAILED_ATTEMPTS.format(time=remaining_time),
-            },
-            status=status.HTTP_403_FORBIDDEN,
-        )
-
-    stored_otp = cache.get(f"otp:{mobile_number}")
+        raise UserBlockedException(remaining_time=remaining_time)
+    stored_otp = redis_cache.get(f"otp:{mobile_number}")
     if str(stored_otp) != otp:
         increment_failed_attempts(ip_address, mobile_number)
-        return Response(
-            {"detail": INVALID_OR_EXPIRED_OTP}, status=status.HTTP_400_BAD_REQUEST
-        )
+        raise InvalidOTPException()
 
-    reset_failed_attempts(ip_address, mobile_number)
     user = create_user(mobile_number)
     token = generate_user_token(user)
-    clean_up_cache(mobile_number, nonce)
 
-    return Response(
-        {
-            "refresh": token["refresh"],
-            "access": token["access"],
-        },
-        status=status.HTTP_200_OK,
-    )
+    # Clean up Redis cache after successful login
+    clean_up_cache(ip_address, mobile_number, nonce)
+
+    return {
+        "refresh": token["refresh"],
+        "access": token["access"],
+    }
