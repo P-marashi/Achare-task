@@ -11,7 +11,7 @@ ALLOWED_HOSTS = [DOMAIN_NAME, f"www.{DOMAIN_NAME}"]
 
 DATABASES = {
     "default": env.db(
-        "DATABASE_URL", default="mysql://admin:pouya@achare_db:3306/woody"
+        "DATABASE_URL", default="postgres://admin:pouya@achare-database:5432/achare"
     ),
 }
 

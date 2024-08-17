@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: achare-database
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=achare
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=pouya
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: on-failure
+
+  redis:
+    container_name: achare-redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    restart: on-failure
+
+  web:
+    container_name: achare-web
+    build:
+      context: .
+      dockerfile: docker/production.Dockerfile
+    command: docker/entrypoints/web_entrypoint.sh
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.django.production
+      - DATABASE_URL=postgres://admin:pouya@db:5432/achare
+      - REDIS_URL=redis://redis:6379/0  
+    volumes:
+      - .:/app
+    ports:
+      - "8010:8010"
+    depends_on:
+      - db
+      - redis
+    restart: on-failure
+
+volumes:
+  postgres_data:
+
+networks:
+  master:
+    external: true
