@@ -38,7 +38,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         PASSWORD = "password", _("password")
 
     mobile_number = models.CharField(
-        max_length=15, unique=True, validators=[validate_phone_number]
+        max_length=11, unique=True, validators=[validate_phone_number]
     )
     last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(max_length=255, blank=True)
