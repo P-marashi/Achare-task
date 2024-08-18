@@ -87,7 +87,7 @@ class VerifyOtp(APIView):
 
         try:
             tokens = verify_and_authenticate_user(nonce, otp, ip_address)
-            return Response(tokens, status=status.HTTP_200_OK)
+            return Response(tokens, status=status.HTTP_201_CREATED)
         except UserBlockedException as e:
             return Response({"detail": str(e)}, status=status.HTTP_403_FORBIDDEN)
         except InvalidNonceException:

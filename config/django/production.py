@@ -6,7 +6,7 @@ DEBUG = env("SETTINGS_DEBUG")
 
 
 # Allowed hosts (Set your domain here)
-ALLOWED_HOSTS = [DOMAIN_NAME, f"www.{DOMAIN_NAME}"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
 
 
 DATABASES = {

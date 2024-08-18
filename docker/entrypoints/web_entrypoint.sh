@@ -1,13 +1,15 @@
 #!/bin/sh
 
+echo "--> Waiting for db to be ready"
+./wait-for-it.sh db:5432
+
 # Apply database migrations
 echo "Apply database migrations"
+python manage.py makemigration
 python manage.py migrate
-
-echo "Collect static files"
 python manage.py collectstatic --clear --noinput
 python manage.py collectstatic --noinput
 
 # Start server
 echo "--> Starting web process"
-gunicorn --reload --timeout=30 --workers=10 --bind 0.0.0.0:8010 config.wsgi:application
+gunicorn config.wsgi:application -b 0.0.0.0:8010
